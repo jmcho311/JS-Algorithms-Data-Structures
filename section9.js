@@ -11,6 +11,8 @@ reverse("rithmschool")  // "loohcsmhtir"
 // 15. Reverse (Instructor solution)
 
 
+// =================================================================================
+
 // 16. isPalindrome: Write a recursive function called isPalindrome which returns true if the string passed to it is a palindrome (reads the same forward and backward). Otherwise it returns false.
 function isPalindrome() {
 
@@ -22,6 +24,8 @@ isPalindrome('tacocat')  // true
 
 // 16. isPalindrome (Instructor solution)
 
+
+// =================================================================================
 
 // 17. someRecursive: Write a recursive function called someRecursive which accepts an array and a callback. The function returns true if a single value in the array returns true when passed to the callback. Otherwise it returns false.
 function someRecursive() {
@@ -38,6 +42,8 @@ someRecursive([4, 6, 8], val => val > 10) // false
 // 17. someRecursive (Instructor solution)
 
 
+// =================================================================================
+
 // 18. flatten: Write a recursive function called flatten which accepts an array of arrays and returns a new array with all values flattened.
 function flatten() {
 
@@ -51,6 +57,8 @@ flatten([[[[1], [[[2]]], [[[[[[[3]]]]]]]]]])  // [1, 2, 3]
 // 18. flatten (Instructor solution)
 
 
+// =================================================================================
+
 // 19. capitalizeFirst: Write a recursive function called capitalizeFirst. Given an array of strings, capitalize the first letter of each string in the array.
 function capitalizeFirst() {
 
@@ -60,6 +68,8 @@ capitalizeFirst(['car', 'taco', 'banana']);  // ['Car', 'Taco', 'Banana']
 
 // 19. capitalizeFirst (Instructor solution)
 
+
+// =================================================================================
 
 // 20. nestedEvenSum: Write a recursive function called nestedEvenSum. Return the sum of all even numbers in an object which may contain nested objects.
 function nestedEvenSum() {
@@ -92,6 +102,8 @@ nestedEvenSum(obj2);  // 10
 // 20. nestedEvenSum (Instructor solution)
 
 
+// =================================================================================
+
 // 21. capitalizeWords: Write a recursive function called capitalizeWords. Given an array of words, return a new array containing each word capitalized.
 function capitalizeWords() {
 
@@ -102,6 +114,8 @@ capitalizeWords(words);  // ['I', 'AM', 'LEARNING', 'RECURSION]
 
 // 21. capitalizeWords (Instructor solution)
 
+
+// =================================================================================
 
 // 22. stringifyNumbers: Write a function called stringifyNumnbers which takes in an object and finds all of the values which are numbers and converts them to strings. Recursion would be a great way to solve this!
 function stringifyNumbers() {
@@ -124,6 +138,8 @@ stringifyNumbers(obj);
 
 // 22. stringifyNumbers (Instructor solution)
 
+
+// =================================================================================
 
 // 23. collectStrings: Write a function called collectStrings which accepts an object and returns an array of all the values in the object that have a typeof string.
 function collectStrings() {

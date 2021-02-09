@@ -57,17 +57,21 @@ function sameFrequency(num1, num2){
 }
 
 
+// =================================================================================
+
 // 4. Frequency Counter: Multiple Pointers - areThereDuplicates  (my solution)
 // Implement a function called, areThereDuplicates which accepts a variable number of arguments, and checks whether there are any duplicates among the arguments passed in. You can solve this using the frequency counter pattern OR the multiple pointers pattern.
-function areThereDuplicates(arguments) {
-    let lookup = arguments.toString();
-    let i = 0
-    for (let j = 1; j < lookup.length; j++) {
-        if (lookup[i] !== lookup[j]) {
-            j++;
-        } 
+function areThereDuplicates() {
+    if (arguments.length === 1) return false;
+    let duplicates = {};
+    for (let val in arguments) {
+        duplicates[arguments[val]] = (duplicates[arguments[val]] || 0) + 1
     }
-    return true;
+    console.log(duplicates)
+    for (let key in duplicates) {
+        if(duplicates[key] > 1) return true;
+    }
+    return false;
 }
 
 areThereDuplicates(1, 2, 3);
@@ -108,20 +112,12 @@ function areThereDuplicates() {
 }
 
 
+// =================================================================================
+
 // 5. Multiple Pointers - averagePair  (my solution)
 // Write a function called averagePair. Given a sorted array of integers and a target average, determine if there is a pair of values in the array where the average of the pair equals the target average. There may be more than one pair that matches the average target.
-function averagePair(arr, avg) {
-    if (arr.length === 0) return false;
-    let i = 0;
-    for (let j = 1; j < arr.length; j++) {
-        let calc = (arr[i] + arr[j])/2;
-        if (calc !== avg) {
-            i++; 
-            j++;
-        } else {
-            return true;
-        }
-    }
+function averagePair(arr, avg){
+
 }
 
 averagePair([1, 2, 3], 2.5)  // true
@@ -147,6 +143,9 @@ averagePair([1, 3, 3, 5, 6, 7, 10, 12, 19], 8)  // true
 averagePair([-1, 0, 3, 4, 5, 6], 4.1)  // false
 averagePair([], 4)  // false
 
+
+// =================================================================================
+
 // 6. Multiple Pointers - isSubsequence  (my solution)
 // Write a function called isSubsequence which takes in two strings and checks whether the characters in the first string form a subsequence of the characters in the second string. In other words, the function should check whether the characters in the first string appear somewhere in the second string, without their order changing. 
 function isSubsequence() {
@@ -158,8 +157,29 @@ isSubsequence('sing', 'sting');  // true
 isSubsequence('abc', 'abracadabra');  // true
 isSubsequence('abc', 'acb');  // false (order matters)
 
-// 6. Multiple Pointers - isSubsequence  (Instructor solution)
+// 6. Multiple Pointers - isSubsequence  (Instructor solution - Iterative)
+function isSubsequence(str1, str2) {
+    var i = 0;
+    var j = 0;
+    if (!str1) return true;
+    while (j < str2.length) {
+        if (str2[j] === str1[i]) i++;
+        if (i === str1.length) return true;
+        j++;
+    }
+    return false;
+}
 
+// 6. Multiple Pointers - isSubsequence  (Instructor solution - Recursive but not O(1) Space)
+function isSubsequence(str1, str2) {
+    if(str1.length === 0) return true
+    if(str2.length === 0) return false
+    if(str2[0] === str1[0]) return isSubsequence(str1.slice(1), str2.slice(1))  
+    return isSubsequence(str1, str2.slice(1))
+}
+
+
+// =================================================================================
 
 // 7. Sliding Window - maxSubarraySum  (my solution)
 // Given an array of integers and a number, write a function called maxSubarraySum, which finds the maximum sum of a subarray with the length of the number passed to the function.
@@ -176,7 +196,23 @@ maxSubarraySum([3, -2, 7, -4, 1, -1, 4, -2, 1], 2);  // 5
 maxSubarraySum([2, 3], 3);  // null
 
 // 7. Sliding Window - maxSubarraySum  (Instructor solution)
+function maxSubarraySum(arr, num){
+    if (arr.length < num) return null;
 
+    let total = 0;
+    for (let i=0; i<num; i++){
+        total += arr[i];
+    }
+    let currentTotal = total;
+    for (let i = num; i < arr.length; i++) {
+        currentTotal += arr[i] - arr[i-num];
+        total = Math.max(total, currentTotal);
+    }
+    return total;
+}
+
+
+// =================================================================================
 
 // 8. Sliding Window - minSubArrayLen  (my solution)
 // Write a function called minSubArrayLen which accepts two parameters - an array of positive integers and a positive integer.
@@ -196,7 +232,36 @@ minSubArrayLen([4, 3, 3, 8, 1, 2, 3], 11);  // 2
 minSubArrayLen([1, 4, 16, 22, 5, 7, 8, 9, 10], 95);  // 0
 
 // 8. Sliding Window - minSubArrayLen  (Instructor solution)
+function minSubArrayLen(nums, sum) {
+    let total = 0;
+    let start = 0;
+    let end = 0;
+    let minLen = Infinity;
 
+    while (start < nums.length) {
+      // if current window doesn't add up to the given sum then 
+          // move the window to right
+        if(total < sum && end < nums.length){
+        total += nums[end];
+            end++;
+        }
+      // if current window adds up to at least the sum given then
+          // we can shrink the window 
+        else if(total >= sum){
+            minLen = Math.min(minLen, end-start);
+                total -= nums[start];
+                start++;
+        } 
+      // current total less than required total but we reach the end, need this or else we'll be in an infinite loop 
+        else {
+            break;
+        }
+    }
+    return minLen === Infinity ? 0 : minLen;
+}
+
+
+// =================================================================================
 
 // 9. Sliding Window - findLongestSubstring  (my solution)
 // Write a function called findLongestSubstring, which accepts a string and returns the length of the longest substring with all distinct characters.
@@ -213,3 +278,20 @@ findLongestSubstring('longestsubstring');  // 8
 findLongestSubstring('thisishowwedoit');  // 6
 
 // 9. Sliding Window - findLongestSubstring  (Instructor solution)
+function findLongestSubstring(str) {
+    let longest = 0;
+    let seen = {};
+    let start = 0;
+
+    for (let i = 0; i < str.length; i++) {
+        let char = str[i];
+        if (seen[char]) {
+            start = Math.max(start, seen[char]);
+        }
+      // index - beginning of substring + 1 (to include current in count)
+        longest = Math.max(longest, i - start + 1);
+      // store the index of the next char so as to not double count
+        seen[char] = i + 1;
+    }
+    return longest;
+}
